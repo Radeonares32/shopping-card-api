@@ -1,0 +1,1 @@
+export const jwtPayload:string = "Radeonares32"
