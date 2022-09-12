@@ -6,14 +6,11 @@ import path from 'path'
 const app = express()
 const server = http.createServer(app)
 app.use('/public', express.static(path.join(__dirname, '../public')))
-app.use(cors())
+app.use(cors({
+    origin:'*',
+    credentials:true
+}))
 app.use(express.json())
-app.use('*',function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
 
 // Database 
 import { DB } from './db/db'

@@ -99,7 +99,9 @@ export const addUserProduct = async () => {
 }
 
 export const findUserProduct = async (title: string) => {
-    return userProduct.find({ title })
+    return userProduct.find({ title }).populate({
+        path:"UserCategory"
+    })
 }
 export const allUserProduct = async () => {
     return userProduct.find()
@@ -163,7 +165,7 @@ export const userProductAddBasket = async (id: string, email: string, quantity: 
     const uProduct = await userProduct.findById(id).populate("category")
     const isUserProductBasket = await User.find({ "userProduct._id": id })
     if ((await isUserProductBasket).length > 0) {
-        sum += isUserProductBasket[0].userProduct[0].price * (isUserProductBasket[0].userProduct[0].quantity + quantity)
+        sum += isUserProductBasket[0].userProduct[0].price * quantity
         await User.updateOne({ email, "userProduct._id": id }, {
             $inc: {
                 "userProduct.$.quantity": quantity
@@ -201,7 +203,7 @@ export const adminProductAddBasket = async (id: string, email: string, quantity:
     }, { adminProduct: { $elemMatch: { title: aProduct.title } } })
     if ((await isAdminProductBasket).length > 0) {
         //@ts-ignore
-        sum += aProduct.price * (isAdminProductBasket[0].adminProduct[0].quantity + quantity)
+        sum += aProduct.price * quantity
         await User.updateOne({ email, "adminProduct._id": id }, {
             $inc: {
                 "adminProduct.$.quantity": quantity
@@ -235,7 +237,7 @@ export const productAddBasket = async (id: string, email: string, quantity: numb
     }, { products: { $elemMatch: { title: product.title } } })
     if ((await productBasket).length > 0) {
         //@ts-ignore
-        sum += product.price * (productBasket[0].products[0].quantity + quantity)
+        sum += product.price * quantity
         await User.updateOne({ email, "products._id": id }, {
             $inc: {
                 "products.$.quantity": quantity
