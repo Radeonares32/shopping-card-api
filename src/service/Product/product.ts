@@ -100,12 +100,12 @@ export const addUserProduct = async () => {
 
 export const findUserProduct = async (title: string) => {
     return userProduct.find({ title }).populate({
-        path:"UserCategory"
+        path:"category"
     })
 }
 export const allUserProduct = async () => {
     return userProduct.find().populate({
-        path:"UserCategory"
+        path:"category"
     })
 }
 export const updateUserProduct = async (id: string, title: string, description: string, image: string | undefined, price: number, quantity: number, category: any) => {
