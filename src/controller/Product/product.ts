@@ -69,7 +69,7 @@ export const getAllProduct: Handler = async (req, res) => {
     })
 }
 export const deleteProduct: Handler = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
@@ -133,7 +133,7 @@ export const getAdminProductDetail: Handler = async (req, res) => {
     })
 }
 export const deleteAdminProduct: Handler = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
@@ -201,7 +201,7 @@ export const allUserCategories: Handler = async (req, res) => {
     }
 }
 export const deleteUserCategories: Handler = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
@@ -253,7 +253,7 @@ export const userProductAddBasket: Handler = async (req, res) => {
     }
 }
 export const deleteUserProductBasket: Handler = async (req, res) => {
-    const { id, email } = req.body
+    const { id, email } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
@@ -324,7 +324,7 @@ export const productAddBasket: Handler = async (req, res) => {
 }
 
 export const deleteAdminProductBasket: Handler = async (req, res) => {
-    const { id, email } = req.body
+    const { id, email } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
@@ -347,7 +347,7 @@ export const deleteAdminProductBasket: Handler = async (req, res) => {
     }
 }
 export const deleteProductBasket: Handler = async (req, res) => {
-    const { id, email } = req.body
+    const { id, email } = req.params
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
