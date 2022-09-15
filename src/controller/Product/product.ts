@@ -230,14 +230,14 @@ export const allUserProduct: Handler = async (req, res) => {
     })
 }
 export const userProductAddBasket: Handler = async (req, res) => {
-    const { id, email, quantity, price } = req.body
+    const { id, email, quantity, price,description } = req.body
     const tk = req.headers.authorization
     if (tk) {
         const token: any = tk?.split(' ')[1]
         const tokenVerify: any = JwtVerify(token)
         const user = await UserServices.findUserToken(tokenVerify)
         if (user) {
-            await ProductService.userProductAddBasket(id, email, quantity, price)
+            await ProductService.userProductAddBasket(id, email, quantity, price,description)
             res.json({
                 message: "Add basket product"
             })

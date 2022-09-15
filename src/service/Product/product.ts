@@ -162,15 +162,16 @@ export const deleteUserCategory = async (id: string) => {
     }).exec()
     await UserCategory.deleteOne({ _id: id })
 }
-export const userProductAddBasket = async (id: string, email: string, quantity: number, price: number) => {
+export const userProductAddBasket = async (id: string, email: string, quantity: number, price: number,description:string) => {
     let sum = 0;
     const uProduct = await userProduct.findById(id).populate("category")
     const isUserProductBasket = await User.find({ "userProduct._id": id })
     if ((await isUserProductBasket).length > 0) {
         sum += isUserProductBasket[0].userProduct[0].price * quantity
         await User.updateOne({ email, "userProduct._id": id }, {
-            $inc: {
-                "userProduct.$.quantity": quantity
+            $set: {
+                "userProduct.$.quantity": quantity,
+                "userProduct.$.description":description
             }
 
         }).exec()
@@ -207,7 +208,7 @@ export const adminProductAddBasket = async (id: string, email: string, quantity:
         //@ts-ignore
         sum += aProduct.price * quantity
         await User.updateOne({ email, "adminProduct._id": id }, {
-            $inc: {
+            $set: {
                 "adminProduct.$.quantity": quantity
             }
 
@@ -241,7 +242,7 @@ export const productAddBasket = async (id: string, email: string, quantity: numb
         //@ts-ignore
         sum += product.price * quantity
         await User.updateOne({ email, "products._id": id }, {
-            $inc: {
+            $set: {
                 "products.$.quantity": quantity
             }
 
