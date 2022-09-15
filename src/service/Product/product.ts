@@ -164,10 +164,18 @@ export const deleteUserCategory = async (id: string) => {
 }
 export const userProductAddBasket = async (id: string, email: string, quantity: number, price: number,description:string) => {
     let sum = 0;
+    let prevSum = 0
+   
     const uProduct = await userProduct.findById(id).populate("category")
     const isUserProductBasket = await User.find({ "userProduct._id": id })
     if ((await isUserProductBasket).length > 0) {
-        sum += isUserProductBasket[0].userProduct[0].price * quantity
+       // 1000
+       
+        sum = isUserProductBasket[0].userProduct[0].price/isUserProductBasket[0].userProduct[0].quantity  * quantity
+
+         
+        
+        
         await User.updateOne({ email, "userProduct._id": id }, {
             $set: {
                 "userProduct.$.quantity": quantity,
