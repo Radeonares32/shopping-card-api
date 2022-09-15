@@ -118,34 +118,19 @@ export const postAdminProduct: Handler = async (req, res) => {
     }
 }
 export const getAllAdminProduct: Handler = async (req, res) => {
-   
-            const adminProduct = await ProductService.allAdminProduct()
-            res.status(200).json({
-                adminProduct
-            })
+
+    const adminProduct = await ProductService.allAdminProduct()
+    res.status(200).json({
+        adminProduct
+    })
 }
 export const getAdminProductDetail: Handler = async (req, res) => {
-    const tk = req.headers.authorization
     const { id } = req.params
-    if (tk) {
-        const token: any = tk?.split(' ')[1]
-        const tokenVerify: any = JwtVerify(token)
-        const user = await UserServices.findUserToken(tokenVerify)
-        if (user) {
-            const adminProduct = await ProductService.findByIdAdminProduct(id)
-            res.status(200).json({
-                adminProduct
-            })
-        } else {
-            res.status(403).json({
-                message: "Token not verify"
-            })
-        }
-    } else {
-        res.status(403).json({
-            message: "Not Token"
-        })
-    }
+
+    const adminProduct = await ProductService.findByIdAdminProduct(id)
+    res.status(200).json({
+        adminProduct
+    })
 }
 export const deleteAdminProduct: Handler = async (req, res) => {
     const { id } = req.body
