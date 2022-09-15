@@ -177,7 +177,8 @@ export const userProductAddBasket = async (id: string, email: string, quantity: 
         }).exec()
         await User.updateOne({ email, "userProduct._id": id }, {
             $set: {
-                "userProduct.$.price": sum
+                "userProduct.$.price": sum,
+                "userProduct.$.description":description
             }
         })
     }
@@ -189,7 +190,8 @@ export const userProductAddBasket = async (id: string, email: string, quantity: 
         }).exec()
         await User.updateOne({ email, "userProduct._id": id }, {
             $set: {
-                "userProduct.$.price": price
+                "userProduct.$.price": price,
+                "userProduct.$.description":description
             }
         }).exec()
     }
